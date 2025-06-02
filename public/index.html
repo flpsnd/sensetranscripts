@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Meeting Notes</title>
+</head>
+<body>
+  <h1>Upload Meeting Context</h1>
+  <a href="/auth/google">Sign in with Google</a>
+  <form id="contextForm" enctype="multipart/form-data" method="post" action="/api/save-context">
+    <div>
+      <label>Docx file:</label>
+      <input type="file" name="docx" accept=".docx" />
+    </div>
+    <div>
+      <label>Additional Notes:</label><br>
+      <textarea name="notes" rows="4" cols="50"></textarea>
+    </div>
+    <div>
+      <label>Fireflies API Key:</label>
+      <input type="text" name="apiKey" />
+    </div>
+    <div>
+      <label>Slack Usernames (comma separated):</label>
+      <input type="text" name="slackUsers" />
+    </div>
+    <button type="submit">Save Context</button>
+  </form>
+  <script>
+    // simple fetch form submission
+    document.getElementById('contextForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      const res = await fetch('/api/save-context', { method: 'POST', body: data });
+      if (res.ok) alert('Saved!'); else alert('Error');
+    });
+  </script>
+</body>
+</html>
